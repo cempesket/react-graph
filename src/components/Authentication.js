@@ -5,7 +5,6 @@ import {LOGIN, SIGNUP} from "../queries/Query";
 class Authentication extends Component {
     constructor(props) {
         super(props);
-        console.log(props);
         this.state = {
             login: true,
             email: '',

@@ -28,8 +28,10 @@ class NewFeed extends Component {
                            onChange={e => this.setState({description: e.target.value})}/>
                 </div>
                 <Mutation mutation={NEW_FEED} variables={{description, url}}
-                          onCompleted={()=> this.props.history.push('/', {})}>
+                          onCompleted={()=> this.props.history.push('/', {})}
+                onError={(error)=> alert(error.graphQLErrors[0].message)  }>
                     {(postMutation, {loading, error, data}) => {
+
                         return (<button onClick={postMutation}>{loading ? 'loading...' : '+'}</button>)
                     }}
                 </Mutation>
