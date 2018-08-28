@@ -7,9 +7,13 @@ const FETCH_FEED = gql `query {
         id
         url
         description
+        createdAt
         author {
             name
             email
+        }
+        votes {
+            createdAt
         }
     }}
 `;
@@ -36,4 +40,12 @@ const SIGNUP = gql `mutation PostMutation($name: String!,$email: String!, $passw
         user {id}
     }
 }`;
-export {FETCH_FEED, NEW_FEED, LOGIN, SIGNUP}
+
+// language=GraphQL
+const VOTE = gql `mutation PostMutation($linkId: ID!){
+    createVote(linkId:$linkId) {
+        createdAt
+    }
+}`;
+
+export {FETCH_FEED, NEW_FEED, LOGIN, SIGNUP,VOTE}

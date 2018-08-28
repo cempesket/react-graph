@@ -15,7 +15,7 @@ class FeedList extends Component {
                         return (<div>Loading...</div>);
                     if (error)
                         return (<div>{error}</div>);
-                    const feed = data.feed.map(feedItem => (<FeedItem key={feedItem.id} feedItem={feedItem}/>));
+                    const feed = data.feed.map((feedItem,index) => (<FeedItem index = {index} key={feedItem.id} feedItem={feedItem}/>));
                     return (<div>{feed}</div>)
                 }}
 
