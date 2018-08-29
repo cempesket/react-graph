@@ -26,10 +26,11 @@ class NewFeed extends Component {
                            onChange={e => this.setState({description: e.target.value})}/>
                 </div>
                 <Mutation mutation={NEW_FEED} variables={{description, url}}
-                          onCompleted={() => this.props.history.push('/', {})}
+                          onCompleted={() => this.props.route.history.push('/', {})}
                           onError={(error) => alert(error.graphQLErrors[0].message)}
                           update={(store, data) => {
-                              const cache = store.readQuery({query: FETCH_FEED});
+                              const cache = store.readQuery({query: FETCH_FEED,variables:{filter: null,first: 100, skip: 1}});
+                              console.log(cache);
                               cache.feed.unshift(data.data.postLink);
                               store.writeQuery({query: FETCH_FEED, data:cache})
                           }}
