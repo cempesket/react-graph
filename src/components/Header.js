@@ -6,12 +6,11 @@ import {withRouter} from 'react-router';
 class Header extends Component {
 
 
-    getAuthenticationBlock = () => {
-        const token = localStorage.getItem('token');
-        if (token) {
+    getAuthenticationBlock = (isAuth) => {
+        if (isAuth) {
             return (<button className="ml1 no-underline black" onClick={() => {
                 localStorage.removeItem('token');
-                this.setState({auth: false})
+                this.props.unauthenticate()
             }}>logout</button>)
         }
         return (<Link to="/login" className="ml1 no-underline black">
@@ -28,11 +27,11 @@ class Header extends Component {
                         Feed
                     </Link>
                     <div className="ml1">|</div>
-                    <Link to="/create" className="ml1 no-underline black">
+                    {this.props.isAuth ? (<Link to="/create" className="ml1 no-underline black">
                         Add Feed
-                    </Link>
+                    </Link>) : ''}
                     <div className="ml1">|</div>
-                    {this.getAuthenticationBlock()}
+                    {this.getAuthenticationBlock(this.props.isAuth)}
                 </div>
             </div>
         );

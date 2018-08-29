@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import {Mutation} from 'react-apollo';
 import {FETCH_FEED, NEW_FEED} from "../queries/Query";
-//import {FETCH_FEED} from "./FeedList";
-
 
 
 
@@ -28,11 +26,15 @@ class NewFeed extends Component {
                            onChange={e => this.setState({description: e.target.value})}/>
                 </div>
                 <Mutation mutation={NEW_FEED} variables={{description, url}}
-                          onCompleted={()=> this.props.history.push('/', {})}
-                onError={(error)=> alert(error.graphQLErrors[0].message)  }
-                          refetchQueries={[ { query: FETCH_FEED }]}
+                          onCompleted={() => this.props.history.push('/', {})}
+                          onError={(error) => alert(error.graphQLErrors[0].message)}
+                          update={(store, data) => {
+                              const cache = store.readQuery({query: FETCH_FEED});
+                              cache.feed.unshift(data.data.postLink);
+                              store.writeQuery({query: FETCH_FEED, data:cache})
+                          }}
                 >
-                    {(postMutation, {loading, error, data}) => {
+                    {(postMutation, {loading}) => {
 
                         return (<button onClick={postMutation}>{loading ? 'loading...' : '+'}</button>)
                     }}

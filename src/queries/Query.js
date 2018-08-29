@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 // language=GraphQL
 const FETCH_FEED = gql `query {
 
-    feed {
+    feed(orderBy:createdAt_DESC) {
         id
         url
         description
@@ -22,6 +22,16 @@ const FETCH_FEED = gql `query {
 const NEW_FEED = gql `mutation PostMutation($description: String!, $url: String!){
     postLink(description: $description, url: $url) {
         id
+        url
+        description
+        createdAt
+        author {
+            name
+            email
+        }
+        votes {
+            createdAt
+        }
     }
 }`;
 
@@ -45,6 +55,8 @@ const SIGNUP = gql `mutation PostMutation($name: String!,$email: String!, $passw
 const VOTE = gql `mutation PostMutation($linkId: ID!){
     createVote(linkId:$linkId) {
         createdAt
+        link {id votes {createdAt}}
+        
     }
 }`;
 

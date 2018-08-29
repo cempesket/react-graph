@@ -20,10 +20,13 @@ class Authentication extends Component {
                 <div className="flex flex-column">
                     {!this.state.login && (<input type="text" placeholder="Your Name" value={name}
                                                   onChange={(e) => this.setState({name: e.target.value})}/>)}
+                    <form action={'#'}>
                     <input type="text" placeholder="Your Email" value={email}
                            onChange={(e) => this.setState({email: e.target.value})}/>
                     <input type="password" placeholder="password" value={password}
+                           autoComplete={'complete'}
                            onChange={(e) => this.setState({password: e.target.value})}/>
+                    </form>
                 </div>
                 <div className="flex mt3">
                     <Mutation mutation={this.state.login ? LOGIN : SIGNUP} variables={{name, email, password}}
@@ -62,8 +65,9 @@ class Authentication extends Component {
         const token = this.state.login ? data.login.token : data.signup.token;
         if (token)
             this._saveUser(token);
+        this.props.authenticate();
 
-        this.props.history.push('/')
+        this.props.route.history.push('/')
     };
 }
 
