@@ -1,4 +1,4 @@
-const PAGINATION_LIMIT = 9;
+const PAGINATION_LIMIT = 15;
 const FEED_SORT_BY = 'createdAt_DESC';
 
 
