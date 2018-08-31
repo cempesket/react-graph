@@ -1,0 +1,5 @@
+const PAGINATION_LIMIT = 9;
+const FEED_SORT_BY = 'createdAt_DESC';
+
+
+export {PAGINATION_LIMIT, FEED_SORT_BY}

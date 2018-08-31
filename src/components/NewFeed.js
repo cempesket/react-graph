@@ -3,7 +3,6 @@ import {Mutation} from 'react-apollo';
 import {FETCH_FEED, NEW_FEED} from "../queries/Query";
 
 
-
 class NewFeed extends Component {
     constructor(props) {
         super(props);
@@ -15,6 +14,7 @@ class NewFeed extends Component {
 
     render() {
         const {url, description} = this.state;
+        const {variables} = this.props;
         return (
             <div>
                 <div className="flex flex-column mt3">
@@ -29,10 +29,18 @@ class NewFeed extends Component {
                           onCompleted={() => this.props.route.history.push('/', {})}
                           onError={(error) => alert(error.graphQLErrors[0].message)}
                           update={(store, data) => {
-                              const cache = store.readQuery({query: FETCH_FEED,variables:{filter: null,first: 100, skip: 1}});
-                              console.log(cache);
+                              const cache = store.readQuery({
+                                  query: FETCH_FEED,
+                                  variables
+                              });
                               cache.feed.unshift(data.data.postLink);
-                              store.writeQuery({query: FETCH_FEED, data:cache})
+                              console.log(cache);
+
+                              store.writeQuery({
+                                  query: FETCH_FEED,
+                                  variables,
+                                  data: cache
+                              })
                           }}
                 >
                     {(postMutation, {loading}) => {

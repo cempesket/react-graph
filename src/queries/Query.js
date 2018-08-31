@@ -1,9 +1,9 @@
 import gql from 'graphql-tag';
 
 // language=GraphQL
-const FETCH_FEED = gql `query Feed($filter: String,$skip: Int,$first: Int){
+const FETCH_FEED = gql `query Feed($filter: String,$orderBy: VoteOrderByInput,$skip: Int,$first: Int){
 
-    feed(filter:$filter, orderBy:createdAt_DESC,skip:$skip,first:$first) {
+    feed(filter:$filter, orderBy:$orderBy,skip:$skip,first:$first) {
         id
         url
         description
@@ -15,7 +15,11 @@ const FETCH_FEED = gql `query Feed($filter: String,$skip: Int,$first: Int){
         votes {
             createdAt
         }
-    }}
+    } count}
+`;
+// language=GraphQL
+const COUNT = gql `
+    query {count}
 `;
 
 // language=GraphQL
@@ -60,4 +64,4 @@ const VOTE = gql `mutation PostMutation($linkId: ID!){
     }
 }`;
 
-export {FETCH_FEED, NEW_FEED, LOGIN, SIGNUP, VOTE}
+export {FETCH_FEED, NEW_FEED, LOGIN, SIGNUP, VOTE, COUNT}
