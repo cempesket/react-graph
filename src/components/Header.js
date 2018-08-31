@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import {Link} from 'react-router-dom';
 import {withRouter} from 'react-router';
 
@@ -27,10 +27,10 @@ class Header extends Component {
                         Feed
                     </Link>
                     <div className="ml1">|</div>
-                    {this.props.isAuth ? (<Link to="/create" className="ml1 no-underline black">
+                    {this.props.isAuth ? (<Fragment><Link to="/create" className="ml1 no-underline black">
                         Add Feed
-                    </Link>) : ''}
-                    <div className="ml1">|</div>
+                    </Link><div className="ml1">|</div></Fragment>) : ''}
+
                     {this.getAuthenticationBlock(this.props.isAuth)}
                 </div>
             </div>
